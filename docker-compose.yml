@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+
+  attacker:
+    build:
+      context: ./attacker
+    environment:
+      TARGET_HOST: victim
+    command: [ "python", "exploit.py" ]
+    depends_on:
+      - victim
+      - user
+
+  user:
+    image: alpine:3.12.0
+    command: [ "wget", "-q", "-O", "-", "http://victim:4507/index.html" ]
+    depends_on:
+      - victim
+
+  victim:
+    build:
+      context: ./victim
+      args:
+        deno_std_version: 0.74.0
+        deno_version: 1.4.6
+    init: true
+    ports:
+      - "4507:4507"
+    volumes:
+      - "./victim/index.html:/srv/index.html"
