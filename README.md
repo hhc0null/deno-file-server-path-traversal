@@ -59,7 +59,7 @@ Here is the code of the handler for serving file content or directory listing to
 It performs normalization of path part of a user-supplied URL at [[ 1 ]] before decoding URI components at [[ 2 ]]. At [[ 3 ]], it joins `target`, the base directory for file server, and the normalized path.  Then, it serves file content or directory listing of `fsPath` by `serveFile` at [[ 5 ]] or `serveDir` at [[ 6 ]] on the result of `fileInfo` at [[ 4 ]].  
 If an attacker supplies a URL with URI-encoded path traversal character sequences as `req.url`, it bypasses path normalization due to the order of [[ 1 ]] and [[ 2 ]].
 
-## Exploitation
+## Demonstration
 
 There are services constructed with Docker Compose for demonstrating PoC. We can reproduce the issue with the following instructions.
 
